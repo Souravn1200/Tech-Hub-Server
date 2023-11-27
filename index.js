@@ -46,13 +46,42 @@ async function run() {
       res.send(result)
     })
 
-    // Fetchig comments for product
+    // Posting comments for product
 
     app.post('/comments', async(req, res) => {
       const data = req.body;
       const result = await commentsCollection.insertOne(data)
       res.send(result)
     })
+
+    //Fetching comments of perticular product
+    
+    app.get('/comments/:id', async(req, res) => {
+      const id = req.params.id
+      const query = { commentId : id}
+      const result = await commentsCollection.find(query).toArray();
+      res.send(result);
+    })
+
+    // Fetching for searc bar
+    app.get('/search/:item', async(req, res) => {
+      const item = req.params.item
+      const query = {tag : item}
+      const result = await productsCollection.find(query).toArray();
+      res.send(result)
+    })
+
+    // app.get('/search/:item', async (req, res) => {
+    //   const item  = req.params.item; // Access item from URL parameter
+    //   const query = { tag: item }; // Assuming 'tag' is the field to search for in products
+    //   try {
+    //     const result = await productsCollection.find(query).toArray();
+    //     res.send(result);
+    //   } catch (error) {
+    //     res.status(500).send(error.message);
+    //   }
+    // });
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

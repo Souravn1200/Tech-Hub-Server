@@ -79,8 +79,14 @@ async function run() {
       res.send(result)
     })
 
+  // Getting perticular users product to my products
   
- 
+    app.get('/myproducts/:email', async(req, res) => {
+      const email = req.params.email;
+      const query = {ownerEmail : email}
+      const result = await productsCollection.find(query).toArray();
+      res.send(result)
+    })
 
 
     // app.get('/search/:item', async (req, res) => {

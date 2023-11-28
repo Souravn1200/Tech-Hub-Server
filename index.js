@@ -80,7 +80,7 @@ async function run() {
     })
 
   // Getting perticular users product to my products
-  
+
     app.get('/myproducts/:email', async(req, res) => {
       const email = req.params.email;
       const query = {ownerEmail : email}
@@ -88,6 +88,24 @@ async function run() {
       res.send(result)
     })
 
+    // Updating product
+    app.patch('/update/:id', async(req, res) => {
+      const item = req.body
+      const id = req.params.id
+      const filter = {_id : new ObjectId(id)}
+      const updatedDoc = {
+        $set: {
+          product_name: item.product_name,
+        product_image: item.product_image,
+        ddescription: item. ddescription,
+        tag: item.tag,
+        eexternalLinks: item.eexternalLinks,
+       
+        }
+      }
+      const result =  await productsCollection.updateOne(filter, updatedDoc)
+      res.send(result)
+    })
 
     // app.get('/search/:item', async (req, res) => {
     //   const item  = req.params.item; // Access item from URL parameter

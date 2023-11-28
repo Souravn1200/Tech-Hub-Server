@@ -71,6 +71,18 @@ async function run() {
       res.send(result)
     })
 
+    // Posting users products
+
+    app.post('/products', async(req, res) => {
+      const data = req.body;
+      const result = await productsCollection.insertOne(data);
+      res.send(result)
+    })
+
+  
+ 
+
+
     // app.get('/search/:item', async (req, res) => {
     //   const item  = req.params.item; // Access item from URL parameter
     //   const query = { tag: item }; // Assuming 'tag' is the field to search for in products

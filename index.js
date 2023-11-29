@@ -133,7 +133,7 @@ async function run() {
       res.send(result)
     })
 
-    // Mod API
+    // Mod Releted
 
     //  Making product featured
 
@@ -174,6 +174,57 @@ async function run() {
         }
       }
       const result = await productsCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
+
+    // Reporting product
+
+    app.patch('/prodcutreport/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          isReported : true
+        }
+      }
+      const result = await productsCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
+
+    // Admin releted
+    // Fetching all users
+
+    app.get('/users', async(req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result)
+    })
+
+    //Making Admin
+
+    app.patch('/makeadmin/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          isAdmin : true
+        }
+      }
+      const result = await userCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
+
+    //Making MOD
+
+    
+    app.patch('/makemod/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          isMod : true
+        }
+      }
+      const result = await userCollection.updateOne(query, updateDoc);
       res.send(result)
     })
 

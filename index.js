@@ -149,6 +149,33 @@ async function run() {
       res.send(result)
     })
    
+    // Accepting Product 
+
+    app.patch('/prodcutaccept/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          status : 'Accepted'
+        }
+      }
+      const result = await productsCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
+
+    // Rejecting Product
+
+    app.patch('/prodcutreject/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          status : 'Rejected'
+        }
+      }
+      const result = await productsCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
 
     // app.get('/search/:item', async (req, res) => {
     //   const item  = req.params.item; // Access item from URL parameter

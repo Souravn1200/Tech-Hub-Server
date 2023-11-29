@@ -29,6 +29,7 @@ async function run() {
 
     const productsCollection = client.db("techhubDB").collection("products");
     const commentsCollection = client.db("techhubDB").collection("comments");
+    const userCollection = client.db("techhubDB").collection("users");
 
     // Getting all products data
 
@@ -104,6 +105,31 @@ async function run() {
         }
       }
       const result =  await productsCollection.updateOne(filter, updatedDoc)
+      res.send(result)
+    })
+
+    // Deleting Product
+
+    app.delete('/delete/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)}
+      const result = await productsCollection.deleteOne(query);
+      res.send(result);
+    })
+
+    // Users Releted API
+
+    app.post('/users', async(req, res) => {
+
+      const user = req.body;
+      const query = {email : user.email}
+      const existingUser =  await userCollection.findOne(query);
+
+      if(existingUser){
+        return res.send({message: 'User aldeady in db', insertedId: null})
+      }
+      
+      const result =  await userCollection.insertOne(user);
       res.send(result)
     })
 

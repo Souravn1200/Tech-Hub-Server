@@ -128,10 +128,14 @@ async function run() {
       if(existingUser){
         return res.send({message: 'User aldeady in db', insertedId: null})
       }
-      
+
       const result =  await userCollection.insertOne(user);
       res.send(result)
     })
+
+    // Mod API
+
+   
 
     // app.get('/search/:item', async (req, res) => {
     //   const item  = req.params.item; // Access item from URL parameter

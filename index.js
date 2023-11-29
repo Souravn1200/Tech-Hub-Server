@@ -135,6 +135,19 @@ async function run() {
 
     // Mod API
 
+    //  Making product featured
+
+    app.patch('/prodcutreviewqueue/:id', async(req, res) =>{
+      const id =  req.params.id;
+      const query =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set : {
+          isFeatured : true
+        }
+      }
+      const result = await productsCollection.updateOne(query, updateDoc);
+      res.send(result)
+    })
    
 
     // app.get('/search/:item', async (req, res) => {
